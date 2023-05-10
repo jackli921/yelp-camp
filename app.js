@@ -7,7 +7,7 @@ const ejsMate = require('ejs-mate')
 const ExpressError = require('./utils/ExpressError')
 const catchAsync = require('./utils/catchAsync')
 const { CampgroundSchema } = require("./schemas.js")
-
+const Review = require('./models/reviews')
 mongoose.connect('mongodb://localhost:27017/yelp-camp')
 
 const db = mongoose.connection;
@@ -53,6 +53,7 @@ app.get("/campgrounds/new", (req, res) => {
   res.render("campgrounds/new");
 });
 
+
 // save the campground to the database
 app.post('/campgrounds', validateCampground, catchAsync(async(req, res, next)=>{
     // if(!req.body.campground) throw new ExpressError("Invalid Campground Data", 400)
@@ -65,7 +66,7 @@ app.post('/campgrounds', validateCampground, catchAsync(async(req, res, next)=>{
 // display detail campground info
 app.get('/campgrounds/:id', catchAsync(async (req, res)=>{
     const {id} = req.params
-    const campground = await Campground.findById(id)
+    const campground = await Campground.findById(id).populate('reviews')
     res.render("campgrounds/show", { campground });
 }))
 
@@ -88,6 +89,17 @@ app.put(
     res.redirect(`/campgrounds/${campground._id}`);
   })
 );
+
+// reviews
+app.post('/campgrounds/:id/new', async (req, res)=>{
+    const {id} = req.params
+    const campground = await Campground.findById(id)
+    const review = new Review(req.body.reviews);
+    campground.reviews.push(review)
+    await campground.save()
+    await review.save()
+    res.redirect(`/campgrounds/${id}`)
+})
 
 
 app.delete('/campgrounds/:id', catchAsync(async (req,res)=>{
