@@ -91,15 +91,15 @@ app.put(
 );
 
 // reviews
-app.post('/campgrounds/:id/new', async (req, res)=>{
+app.post('/campgrounds/:id/new',catchAsync(async (req, res)=>{
     const {id} = req.params
     const campground = await Campground.findById(id)
-    const review = new Review(req.body.reviews);
+    const review = new Review(req.body.review)
     campground.reviews.push(review)
     await campground.save()
     await review.save()
     res.redirect(`/campgrounds/${id}`)
-})
+}))
 
 
 app.delete('/campgrounds/:id', catchAsync(async (req,res)=>{
