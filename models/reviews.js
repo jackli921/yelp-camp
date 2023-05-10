@@ -12,4 +12,8 @@ const ReviewSchema = new Schema ({
     }
 })
 
+ReviewSchema.post('findOneAndDelete', function(doc){
+    
+})
+
 module.exports = mongoose.model("Review", ReviewSchema);
