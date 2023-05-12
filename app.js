@@ -43,8 +43,8 @@ app.use(session(sessionConfig))
 app.use(flash())
 
 app.use((req, res, next)=>{
-    res.locals.success_deleted = req.flash('success_deleted')
-    res.locals.success_created = req.flash("success_created");
+    res.locals.success = req.flash('success')
+    res.locals.failed = req.flash('failed');
     next()
 })
 

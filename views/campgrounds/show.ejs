@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
-    <h2>
-        <%= success_created %>
-    </h2>
+    <p>
+        <%- include('../partials/flash.ejs')%>
+    </p>
     <div class="row">
         <div class="col-6">
             <div class="card mb-3">
@@ -26,7 +26,39 @@
                     2 days ago
                 </div>
             </div>
+        </div>
 
+        <div class="col-6">
+            <h2>Leave a review</h2>
+            <form method="POST" class="mb-3 validated-form" action="/campgrounds/<%=campground._id%>/reviews/new" novalidate>
+
+                <label for="rating" class="form-label mb-3">Rating</label>
+                <select id="rating" name="review[rating]" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <div>
+                    <label for="body" class="form-label">Body:</label>
+                    <textarea id="body" name="review[body]" row="3" class="form-control" required></textarea>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+                <% campground.reviews.map(review => { %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>Rating: <%= review.rating %> </p>
+                            <p><%= review.body %></p>
+                            <form method="POST" action="/campgrounds/<%= campground._id %>/reviews/<%= review._id%>?_method=DELETE">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
         </div>
     </div>
 

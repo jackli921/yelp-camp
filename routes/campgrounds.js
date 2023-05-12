@@ -45,6 +45,7 @@ router.put(
       { ...req.body.campground },
       { new: true }
     );
+    req.flash('success', 'update successful!')
     res.redirect(`/campgrounds/${campground._id}`);
   })
 );
@@ -62,7 +63,7 @@ router.post('/', validateCampground, catchAsync(async(req, res, next)=>{
   
     const campground = new Campground(req.body.campground);
     await campground.save()
-    req.flash("success_created", "successfully created campground");
+    req.flash("success", "successfully created campground");
     res.redirect(`/campgrounds/${campground._id}`)
 }))
 
@@ -72,7 +73,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
-    req.flash("success_deleted", "successfully deleted campground");
+    req.flash("success", "successfully deleted campground");
     res.redirect("/campgrounds");
   })
 );
