@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
 const ExpressError = require('./utils/ExpressError')
 const session = require('express-session')
+const flash = require('connect-flash')
 
 const campgroundRoutes = require("./routes/campgrounds")
 const reviewRoutes = require("./routes/reviews")
@@ -27,6 +28,25 @@ app.engine('ejs', ejsMate)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
+
+const sessionConfig = {
+  secret: "sessionsecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7
+  },
+};
+app.use(session(sessionConfig))
+app.use(flash())
+
+app.use((req, res, next)=>{
+    res.locals.success_deleted = req.flash('success_deleted')
+    res.locals.success_created = req.flash("success_created");
+    next()
+})
 
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
