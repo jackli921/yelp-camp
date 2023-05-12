@@ -26,13 +26,24 @@ router.get("/new", (req, res) => {
 router.get('/:id', catchAsync(async (req, res)=>{
     const {id} = req.params
     const campground = await Campground.findById(id).populate('reviews')
+
+    if(!campground){
+      req.flash('error', 'Cannot find that campground')
+      res.redirect('/campgrounds')
+    }
     res.render("campgrounds/show", { campground });
+
+
 }))
 
 // display edit page
 router.get('/:id/edit', catchAsync(async(req,res)=>{
     const {id} = req.params
     const campground = await Campground.findById(id);
+      if (!campground) {
+        req.flash("error", "Cannot find that campground");
+        res.redirect("/campgrounds");
+      }
     res.render('campgrounds/edit', {campground})
 }))
 
