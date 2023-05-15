@@ -14,12 +14,11 @@
             </div>
 
             <div class="navbar-nav ml-auto">
-                <% if(!user){ %>
+                <% if(!currentUser){ %>
                     <a href="/register" class="class nav-link">Register</a>
                     <a href="/login" class="class nav-link">Login</a>
                 <% }else{ %>
                     <a href="/logout" class="class nav-link">Logout</a>
-
                 <% } %>
             </div>
 

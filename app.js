@@ -53,11 +53,11 @@ app.use(passport.session()) //persist user login
 passport.use(new LocalStrategy(User.authenticate())) //specifying the authentication strategy
 
 passport.serializeUser(User.serializeUser()) //how do we store a user in the session
-passport.deserializeUser(User.deserializeUser()) //how do you get a user out of a sesion
+passport.deserializeUser(User.deserializeUser()) //how do you get a user out of a session
 
 
 app.use((req, res, next)=>{
-    res.locals.user = req.user;
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error');
     next()

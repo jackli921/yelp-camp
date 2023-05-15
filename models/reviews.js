@@ -9,11 +9,17 @@ const ReviewSchema = new Schema ({
     rating:{
         type: Number,
         required:true
+    },
+    author:{
+        type: Schema.Types.ObjectId,
+        ref:'User'
     }
 })
 
 ReviewSchema.post('findOneAndDelete', function(doc){
     
 })
+
+
 
 module.exports = mongoose.model("Review", ReviewSchema);
