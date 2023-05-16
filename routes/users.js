@@ -6,13 +6,14 @@ const catchAsync = require('../utils/catchAsync')
 const {storeReturnTo} = require('../middleware')
 const userController = require("../controllers/users")
 
-router.get('/register', userController.renderRegister)
 
-router.post('/register', catchAsync(userController.createUser))
+router.route('/register')
+  .get(userController.renderRegister)
+  .post(catchAsync(userController.createUser))
 
-router.get('/login', userController.renderLogin)
-
-router.post("/login", storeReturnTo, passport.authenticate("local", {
+router.route('/login')
+  .get(userController.renderLogin)
+  .post(storeReturnTo, passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true
   }), userController.login);
