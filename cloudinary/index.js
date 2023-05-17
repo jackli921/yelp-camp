@@ -17,7 +17,13 @@ const storage = new CloudinaryStorage({
       const ext = file.originalname.split(".").pop();
 
       // Return the file format if it's one of the accepted formats
-      if (ext === "png" || ext === "jpg" || ext === "jpeg") {
+      if (
+        ext === "png" ||
+        ext === "jpg" ||
+        ext === "JPG" ||
+        ext === "PNG" ||
+        ext === "jpeg"
+      ) {
         return ext;
       }
 

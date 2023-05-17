@@ -30,10 +30,11 @@ module.exports.showCampground = async (req, res) => {
 
 module.exports.createCampground = async (req, res, next) => {
   // if(!req.body.campground) throw new ExpressError("Invalid Campground Data", 400)
-
   const campground = new Campground(req.body.campground);
   campground.author = req.user._id;
+  campground.images = req.files.map(image => ({url: image.path, filename: image.filename}))
   await campground.save();
+  console.log(campground)
   req.flash("success", "successfully created campground");
   res.redirect(`/campgrounds/${campground._id}`);
 };
@@ -50,11 +51,10 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateCampground = async (req, res) => {
   const { id } = req.params;
-  const campground = await Campground.findByIdAndUpdate(
-    id,
-    { ...req.body.campground },
-    { new: true }
-  );
+  const campground = await Campground.findByIdAndUpdate(id,{ ...req.body.campground});
+  const imageArr = req.files.map(image => ({url: image.path, filename: image.filename}))
+  campground.images.push(...imageArr)
+  await campground.save()
   req.flash("success", "update successful!");
   res.redirect(`/campgrounds/${campground._id}`);
 };
