@@ -2,14 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Review = require('./reviews')
 
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+// arrow function will not work as it will not bind "this" correctly
+ImageSchema.virtual('thumbnail').get(function() {
+  return this.url.replace('/upload', '/upload/w_200')
+})
+
+
+ImageSchema.virtual('standardSize').get(function() {
+  return this.url.replace('/upload', '/upload/c_fill,w_400,w_600')
+})
+
 const CampgroundSchema = new Schema({
   title: String,
-  images: [
-    {
-      url: String,
-      filename: String,
-    },
-  ],
+  images: [ImageSchema],
   price: Number,
   description: String,
   location: String,
