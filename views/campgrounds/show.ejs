@@ -1,12 +1,9 @@
 <% layout('layouts/boilerplate') %>
     <link rel="stylesheet" href="/stylesheets/stars.css">
-    <p>
-        <%- include('../partials/flash.ejs')%>
-    </p>
+
     <div class="row">
         <div class="col-6">
-            <div id='map' style='width: 400px; height: 300px;'></div>
-
+           
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner mb-3">
                     <% campground.images.forEach((img, i)=>{%>
@@ -17,25 +14,20 @@
                 </div>
 
                 <div>
-
-                <% if(campground.images.length > 1) { %>
+                    <% if(campground.images.length > 1) { %>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        
                     </a>
                     <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>   
                     </a>
                 </div>
                 <% } %>
-        </div>
+            </div>
 
 
             <div class="card mb-3">
-                
-           
-
+            
                 <div class="card-body">
                     <h5 class="card-title"><%=campground.title %> </h5>
                     <p class="card-text"><%=campground.description%></p>
@@ -60,9 +52,11 @@
                 <% } %>
             </div>
         </div>
+        
 
         <div class="col-6">
-        <% if(currentUser){ %>
+            <div id='map' style='width: 100%; height: 350px;' class="mb-3"></div>
+            <% if(currentUser){ %>
             <h2>Leave a review</h2>
 
             <form method="POST" class="mb-3 validated-form" action="/campgrounds/<%=campground._id%>/reviews/new" novalidate>
@@ -108,13 +102,9 @@
         </div>
     </div>
 
-    <script>
-        mapboxgl.accessToken = '<%-process.env.MAPBOX_TOKEN %>'
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN %>'
+    const campground = <%- JSON.stringify(campground) %>
+</script>
 
-        const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL or style object
-            center: [-74.5 , 40], // starting position [lng, lat]
-            zoom: 12, // starting zoom
-        });
-    </script>
+<script src="/js/showPageMap.js"></script>

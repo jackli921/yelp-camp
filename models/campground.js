@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Review = require('./reviews')
 
+
 const ImageSchema = new Schema({
   url: String,
   filename: String,
 });
+
+const opts = { toJSON: {virtuals: true}}
 
 // arrow function will not work as it will not bind "this" correctly
 ImageSchema.virtual('thumbnail').get(function() {
@@ -44,6 +47,12 @@ const CampgroundSchema = new Schema({
       ref: "Review",
     },
   ],
+}, opts);
+
+
+CampgroundSchema.virtual("properties.popUpMarkup").get(function () {
+  return `<h4><a href="/campgrounds/${this._id}" >${this.title}</a></h4>
+          <p>${this.description.substring(0,100)}...</p>`
 });
 
 
