@@ -16,10 +16,6 @@ ImageSchema.virtual('thumbnail').get(function() {
 })
 
 
-ImageSchema.virtual('standardSize').get(function() {
-  return this.url.replace('/upload', '/upload/c_fill,w_400,w_600')
-})
-
 const CampgroundSchema = new Schema({
   title: String,
   images: [ImageSchema],
