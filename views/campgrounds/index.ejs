@@ -11,10 +11,10 @@
             <div class="card" mb-4>
                 <div class="row">
                     <div class="col-md-4">
-                        <% if(campground.images.length !== 0 ){ %>
-                            <img src="<%=campground.images[0].standardSize%>" class="img-fluid" alt="">    
+                        <% if(campground.images.length){ %>
+                            <img crossorigin="anonymous" src="<%=campground.images[0].standardSize%>" class="img-fluid"  alt="">    
                             <% } else {%>
-                                <img src="https://res.cloudinary.com/dqnyw9bvq/image/upload/c_fill,w_400,w_600/v1684588001/YelpCamp/conor-samuel-Onadzzr1yBU-unsplash.jpg.jpg" class="img-fluid" alt="">    
+                                <img crossorigin="anonymous" src="https://res.cloudinary.com/dqnyw9bvq/image/upload/c_fill,w_400,w_600/v1684588001/YelpCamp/conor-samuel-Onadzzr1yBU-unsplash.jpg.jpg" class="img-fluid" alt="">    
                             <% } %>
                     </div>
                     <div class="col-md-8">
