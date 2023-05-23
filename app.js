@@ -22,8 +22,9 @@ const campgroundRoutes = require("./routes/campgrounds")
 const reviewRoutes = require("./routes/reviews")
 const userRoutes = require('./routes/users')
 
-
+const port = process.env.PORT || 3000;
 const dbUrl = process.env.DB_URL;
+
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
@@ -33,6 +34,7 @@ db.on("error", console.error.bind(console, "connection error:"))
 db.once("open", ()=>{
     console.log("database connected")
 })
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, "views"))
 
@@ -153,7 +155,7 @@ app.use((err, req, res, next)=>{
     res.status(status).render('error', {err})
 })
 
-const port = process.env.PORT || 3000
+
 app.listen(port, ()=>{
     console.log(`Serving on port ${port}`)
 })
