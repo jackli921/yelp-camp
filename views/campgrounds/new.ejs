@@ -2,10 +2,10 @@
 <h1 class="text-center">Add a new Camp</h1>
 
 <div class="offset-3 col-6">
-    <form action="/campgrounds" method="POST">
+    <form action="/campgrounds" method="POST" novalidate class="needs-validation">
         <div class="form-group mb-3">
             <label for="title" class="form-label">Title: </label>
-            <input type="text" class="form-control" name="campground[title]" id="title">
+            <input type="text" class="form-control" name="campground[title]" required id="title">
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -13,28 +13,28 @@
     
         <div class="form-group mb-3">
             <label for="location" class="form-label">Location: </label>
-            <input type="text" class="form-control" name="campground[location]" id="location">
+            <input type="text" class="form-control" name="campground[location]" required id="location">
             <div class="valid-feedback">
                 Looks good!
             </div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label" for="price">Campground Price</label>
+            <label class="form-label" for="price">Price</label>
             <div class="input-group">
-                <span class="input-group-text" id="price-label">$</span>
+                <span class="input-group-text" id="price">$</span>
                 <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
-                    aria-describedby="price-label" name="campground[price]" required>
-            </div>
-            <div class="valid-feedback">
+                    aria-describedby="price" name="campground[price]" required>
+                <div class="valid-feedback">
                 Looks good!
-            </div>
+                </div>
+                </div>
         </div>
 
 
         <div class="mb-3">
             <label class="form-label" for="description">Description</label>
-            <textarea class="form-control" type="text" id="description" rows="6" name="campground[description]" required></textarea>
+            <textarea class="form-control" type="text" id="description" rows="6" required name="campground[description]" required></textarea>
             <div class="valid-feedback">
                 Looks good!
             </div>
