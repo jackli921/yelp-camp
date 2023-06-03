@@ -15,7 +15,7 @@
     
             <div class="form-group mb-3">
                 <label for="location" class="form-label">Location: </label>
-                <input type="text" class="form-control" value="<%= campground.location %>" requiredname="campground[location]" id="location">
+                <input type="text" class="form-control" value="<%= campground.location %>" required name="campground[location]" id="location">
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -42,11 +42,11 @@
                 </div>
             </div>
     
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <div class="form-file custom-file">
                     <input type="file" class="form-file-input" id="image" name="image" multiple>
                 </div>
-            </div>
+            </div> -->
     
             <div class="mb-3">
                 <button class="btn btn-info">Update Campground</button>
