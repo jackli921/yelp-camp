@@ -4,11 +4,11 @@
 </div>
 
 ## YelpCamp 
-A campsite review-sharing and discovery platform built using Express, Node, MongoDb, and Mongoose.
+A review-sharing and discovery platform for campsites built using Express, Node, MongoDb, and Mongoose.
 
 ## Overview 
 This app is my first full-stack project. It was built to consolidate the concepts I had learned from
-my full-stack course. Topics include but are not limited to: 
+my full-stack course. Topics include but are not limited to:
 This web app was made for two reasons:
 1. NodeJS (NPM)
 2. ExpressJS (Templating, RESTful APIs)
@@ -38,32 +38,32 @@ To run the project locally:
 5. Run `node app.js`to start the server
 
 ## Dependencies
-@mapbox/mapbox-gl-geocoder
-@mapbox/mapbox-sdk
-cloudinary
-connect-flash
-connect-mongo
-dotenv
-ejs
-ejs-mate
-express
-express-mongo-sanitize
-express-router
-express-session
-helmet
-joi
-mapbox-gl
-method-override
-mongoose
-multer
-multer-storage-cloudinary
-passport
-passport-local
-passport-local-mongoose
-sanitize-html
+- @mapbox/mapbox-gl-geocoder
+- @mapbox/mapbox-sdk
+- cloudinary
+- connect-flash
+- connect-mongo
+- dotenv
+- ejs
+- ejs-mate
+- express
+- express-mongo-sanitize
+- express-router
+- express-session
+- helmet
+- joi
+- mapbox-gl
+- method-override
+- mongoose
+- multer
+- multer-storage-cloudinary
+- passport
+- passport-local
+- passport-local-mongoose
+- sanitize-html
 
 ## Technologies
-- Node.js, Express.js, MongoDB, Mongoose, Mapbox, Cloudinary
+- Node.js, Express.js, MongoDB, JavaScript, Mapbox, Cloudinary
 
 ## Demo
 <div  align="center">
