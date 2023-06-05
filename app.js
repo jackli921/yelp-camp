@@ -4,14 +4,15 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
 const catchAsync = require('./utils/catchAsync')
-
+const ExpressError = require('./utils/ExpressError')
 const session = require("express-session");
 const flash = require("connect-flash");
-
-const ExpressError = require('./utils/ExpressError')
-
-const campgrounds = require('./routes/campgrounds')
-const reviews = require('./routes/reviews')
+const campgroundsRoutes = require('./routes/campgrounds')
+const reviewsRoutes = require('./routes/reviews')
+const userRoutes = require('./routes/users')
+const passport = require('passport')
+const localStrategy = require('passport-local')
+const User = require('./models/user')
 
 async function main(){
     try{
@@ -42,6 +43,7 @@ app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(express.static(path.join(__dirname, "public")));
 
+
 app.get("/", (req,res)=>{
     res.render("home")
 })
@@ -60,6 +62,15 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -67,8 +78,9 @@ app.use((req, res, next) => {
 });
 
 
-app.use("/campgrounds", campgrounds)
-app.use("/campgrounds/:id/reviews", reviews);
+app.use("/", userRoutes)
+app.use("/campgrounds", campgroundsRoutes)
+app.use("/campgrounds/:id/reviews", reviewsRoutes);
 
 app.all('*', (req, res, next)=>{
     next(new ExpressError('Page Not Found', 404))
