@@ -1,6 +1,6 @@
 
-<div align="center">
-<img src="./images/logo.png">
+<div align="center" >
+<img src="./public/images/logo.png" width=450px>
 </div>
 
 ## YelpCamp 
@@ -38,7 +38,7 @@ To run the project locally:
 
 ## Demo
 <div  align="center">
-<img src="./images/demo.gif" height=600px>
+<img src="./public/images/demo.png" width=100%>
 </div>
  
 ## Improvements
