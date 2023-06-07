@@ -15,6 +15,7 @@ const localStrategy = require('passport-local')
 const User = require('./models/user')
 
 
+
 async function main(){
     try{
         await mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp");
