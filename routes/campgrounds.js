@@ -8,21 +8,17 @@ const Review = require('../models/review')
 const campgrounds = require('../controllers/campgrounds')
 const multer = require("multer");
 
-const { storage } = require("../cloudinary");
+const { storage, cloudinary } = require("../cloudinary/index");
 const upload = multer({ storage });
 
 
 router.route('/')
     .get(catchAsync(campgrounds.index))
-    // .post( isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
-    .post(upload.array('image'),(req,res)=> {
-        console.log(req.body, req.files);
-        res.send("IT worked")
-    })
+    .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgrounds.createCampground))
 
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
 
-router.get("/:id", catchAsync(campgrounds.showCampground) );
+router.get("/:id", catchAsync(campgrounds.showCampground));
 router.put("/:id", validateCampground, isLoggedIn, isAuthor, catchAsync(campgrounds.updateCampground));
 router.delete("/:id",isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCampground));
 
