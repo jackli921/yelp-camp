@@ -3,6 +3,8 @@ const Review = require('./models/review')
 const ExpressError = require('./utils/ExpressError')
 const { campgroundSchema, reviewSchema } = require('./schema')
 
+
+
 module.exports.isLoggedIn = (req, res, next) =>{
     if(!req.isAuthenticated()){
         req.session.returnTo = req.originalUrl;

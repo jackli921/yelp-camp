@@ -3,6 +3,7 @@
     (function () {
     'use strict'
 
+    bsCustomFileInput.init();
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
 
@@ -20,3 +21,14 @@
         })
     })()
     
+    const fileInput = document.getElementById("image");
+
+    fileInput.addEventListener("change", (event) => {
+      const selectedFiles = event.target.files;
+      const maxFilesAllowed = 3; // Specify your desired maximum limit
+
+      if (selectedFiles.length > maxFilesAllowed) {
+        event.target.value = ""; // Clear the file input field
+        alert(`You can only upload a maximum of ${maxFilesAllowed} files.`);
+      }
+    });
