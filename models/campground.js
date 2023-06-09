@@ -11,6 +11,7 @@ ImageSchema.virtual("thumbnail").get(function () {
   return this.url.replace("/upload", "/upload/w_400");
 });
 
+
 const campgroundSchema = new Schema({
     title: String,
     price: Number,
