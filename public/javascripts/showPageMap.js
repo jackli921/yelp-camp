@@ -7,7 +7,15 @@ const map = new mapboxgl.Map({
   zoom: 11, // starting zoom
 });
 
-
 new mapboxgl.Marker()
   .setLngLat(geometry.coordinates)
-  .addTo(map)
+  .setPopup(
+    new mapboxgl.Popup({ closeOnClick: false }).setHTML(
+      `<h3>${title}</h3>
+      <p>${campLocation}</p>`
+    )
+  )
+  .addTo(map);
+
+
+  
