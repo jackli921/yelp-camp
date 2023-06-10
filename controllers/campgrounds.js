@@ -1,6 +1,9 @@
 const Campground = require("../models/campground");
 const { cloudinary } = require("../cloudinary")
 
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 module.exports.index = async (req, res) => {
   const allCampgrounds = await Campground.find({});
@@ -8,11 +11,24 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.createCampground = async (req, res) => {
-  // if(!req.body.campground) throw new ExpressError("Invalid Campground data", 400)
+  const geoData = await geocoder.forwardGeocode({
+    query: req.body.campground.location,
+    limit:1
+  }).send();
   const campground = new Campground(req.body.campground);
+  campground.geometry = geoData.body.features[0].geometry;
   campground.author = req.user._id;
   campground.images = req.files.map(f=> ({url: f.path, filename: f.filename}))
+  if(!campground.images[0]){
+    campground.images = [
+      {
+        url: "https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png",
+        filename:"default_img"
+      },
+    ];
+  }
   await campground.save();
+  console.log(campground)
   req.flash("success", "New campground made!");
   res.redirect(`/campgrounds/${campground._id}`);
 };
@@ -36,7 +52,6 @@ module.exports.updateCampground = async (req, res) => {
   const campground = await Campground.findByIdAndUpdate(id, {...req.body.campground});
   const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   campground.images.push(...imgs)
-  await campground.save()
   if (req.body.deleteImages) {
     for (let filename of req.body.deleteImages) {
       await cloudinary.uploader.destroy(filename);
@@ -45,6 +60,15 @@ module.exports.updateCampground = async (req, res) => {
       $pull: { images: { filename: { $in: req.body.deleteImages } } },
     });
   }
+  if (!campground.images[0]) {
+    campground.images = [
+      {
+        url: "https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png",
+        filename: "default_img",
+      },
+    ];
+  }
+  campground.save()
   req.flash("success", "Campground updated!");
   res.redirect(`/campgrounds/${id}`);
 };
