@@ -27,24 +27,29 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000)
         const price = Math.floor(Math.random() * 50) + 10
         const camp = new Campground({
-          title: `${sample(descriptors)} ${sample(places)}`,
-          location: `${cities[random1000].city}, ${cities[random1000].state}`,
-          price: price,
           author: "646135dc706536d598ee4713",
+          location: `${cities[random1000].city}, ${cities[random1000].state}`,
+          title: `${sample(descriptors)} ${sample(places)}`,
+          price: price,
+          geometry: {
+            type: "Point",
+            coordinates: [
+              cities[random1000].longitude,
+              cities[random1000].latitude,
+            ],
+          },
           images: [
             {
-              url: "https://res.cloudinary.com/decdfasqe/image/upload/v1686240263/YelpCamp/rwbwsijngiatmmeh4u06.jpg",
-              filename: "YelpCamp/rwbwsijngiatmmeh4u06",
-              _id: ObjectId("6481fc0903fea3c13fee65b1"),
+              url: "https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png",
+              filename: "default",
             },
             {
-              url: "https://res.cloudinary.com/decdfasqe/image/upload/v1686240263/YelpCamp/f5hjokgvahtt0swn5ibk.jpg",
-              filename: "YelpCamp/f5hjokgvahtt0swn5ibk",
-              _id: ObjectId("6481fc0903fea3c13fee65b2"),
+              url: "https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png",
+              filename: "default",
             },
           ],
           description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "Lorem Ipsum is simply dummy text of the printing and tyndard dummy text ever since the 1500s.",
         });
 
         await camp.save()
