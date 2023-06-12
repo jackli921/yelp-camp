@@ -46,9 +46,6 @@ app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
 const sessionConfig = {
   secret: "thisshouldbeabettersecret!",
@@ -72,15 +69,24 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  console.log(req.session)
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
+
+
 app.use("/", userRoutes);
 app.use("/campgrounds", campgroundsRoutes);
 app.use("/campgrounds/:id/reviews", reviewsRoutes);
+
+app.get("/", (req, res) => {
+  res.render("home")
+  
+});
+
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
