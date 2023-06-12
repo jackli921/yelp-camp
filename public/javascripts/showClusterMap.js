@@ -34,12 +34,12 @@ map.on("load", () => {
         "step",
         ["get", "point_count"],
         "#51bbd6",
-        100,
+        10,
         "#f1f075",
-        750,
+        50,
         "#f28cb1",
       ],
-      "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
+      "circle-radius": ["step", ["get", "point_count"], 10, 10, 20, 50, 30],
     },
   });
 
@@ -51,7 +51,7 @@ map.on("load", () => {
     layout: {
       "text-field": ["get", "point_count_abbreviated"],
       "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-      "text-size": 12,
+      "text-size": 15,
     },
   });
 
@@ -92,8 +92,8 @@ map.on("load", () => {
   // description HTML from its properties.
   map.on("click", "unclustered-point", (e) => {
     const coordinates = e.features[0].geometry.coordinates.slice();
-    const mag = e.features[0].properties.mag;
-    const tsunami = e.features[0].properties.tsunami === 1 ? "yes" : "no";
+    const { popUpMarkup } = e.features[0].properties;
+
 
     // Ensure that if the map is zoomed out such that
     // multiple copies of the feature are visible, the
@@ -104,7 +104,7 @@ map.on("load", () => {
 
     new mapboxgl.Popup()
       .setLngLat(coordinates)
-      .setHTML(`magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`)
+      .setHTML(popUpMarkup)
       .addTo(map);
   });
 
